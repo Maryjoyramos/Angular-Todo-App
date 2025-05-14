@@ -1,0 +1,47 @@
+<div class="todo-container">
+  <h2 class="title">📝 ToDo List</h2>
+
+  <!-- Input Section -->
+  <div class="input-section">
+    <div class="input-wrapper">
+      <input
+        [(ngModel)]="newTodo"
+        placeholder="Write your todo list here..."
+        class="task-input"
+        aria-label="Task input"
+      />
+      <button
+        mat-raised-button
+        [ngClass]="editTodoId ? 'btn-update' : 'btn-add'"
+        (click)="editTodoId ? saveTodo() : addTodo()"
+      >
+        {{ editTodoId ? 'Update' : 'Add' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Success Message -->
+  <div *ngIf="showSuccess" class="success-msg">
+    Task {{ editTodoId ? 'updated' : 'added' }} successfully.
+  </div>
+
+  <!-- Task List -->
+  <div *ngFor="let todo of todos" class="task-card">
+    <div class="task-left">
+      <mat-checkbox
+        [(ngModel)]="todo.completed"
+        (change)="toggleComplete(todo)"
+        aria-label="Mark complete"
+      ></mat-checkbox>
+      <span [class.completed]="todo.completed">{{ todo.title }}</span>
+    </div>
+    <div class="task-right">
+      <button mat-icon-button color="primary" (click)="editTodo(todo)" title="Edit">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="deleteTodo(todo.id)" title="Delete">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
